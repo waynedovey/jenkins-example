@@ -703,9 +703,9 @@ objects:
       # import github repository
       cat <<EOF > /tmp/data.json
       {
-        "clone_addr": "https://github.com/OpenShiftDemos/ticket-monster.git",
+        "clone_addr": "https://github.com/waynedovey/ticket-monster.git",
         "uid": 1,
-        "repo_name": "demo"
+        "repo_name": "master"
       }
       EOF
 
