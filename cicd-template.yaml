@@ -106,11 +106,11 @@ objects:
 
              stage 'Deploy PRODUCTION'
              input message: "Promote to PRODUCTION?", ok: "Promote"
-             // tag for stage
-             sh "${ocCmd} tag dev/tasks:latest stage/tasks:${v}"
+             // tag for production
+             sh "${ocCmd} tag stage/tasks:latest production/tasks:${v}"
              // clean up. keep the imagestream
              sh "${ocCmd} delete bc,dc,svc,route -l app=tasks -n production"
-             // deploy stage image
+             // deploy production image
              sh "${ocCmd} new-app tasks:${v} -n production"
              sh "${ocCmd} expose svc/tasks -n production"
           }
