@@ -187,7 +187,7 @@ objects:
         volumes:
         - name: jenkins-data-2
           persistentVolumeClaim:
-            claimName: jenkins
+            claimName: jenkins-2
     triggers:
     - imageChangeParams:
         automatic: true
