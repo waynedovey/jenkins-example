@@ -705,7 +705,7 @@ objects:
       {
         "clone_addr": "https://github.com/waynedovey/ticket-monster.git",
         "uid": 1,
-        "repo_name": "master"
+        "repo_name": "ticket-monster"
       }
       EOF
 
