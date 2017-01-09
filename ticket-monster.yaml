@@ -60,27 +60,26 @@ objects:
           node('maven') {
              // define commands
              def ocCmd = "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-             // def mvnCmd = "mvn -s configuration/cicd-settings.xml"
-             def mvnHome = tool 'M3'
+             // def mvnCmd = "mvn "
 
              stage 'Build'
              git branch: 'master', url: 'http://gogs:3000/gogs/ticket-monster.git'
              def v = version()
-             sh "${mvnHome}/bin/mvn -f demo/pom.xml clean install"
+             sh "${mvnCmd} -f pom.xml clean install"
 
              stage 'Test and Analysis'
              parallel (
                  'Test': {
-                     sh "${mvnHome}/bin/mvn test"
+                     sh "${mvnCmd} test"
                      step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                  },
                  'Static Analysis': {
-                     sh "${mvnHome}/bin/mvn jacoco:report sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -DskipTests=true"
+                     sh "${mvnCmd} jacoco:report sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -DskipTests=true"
                  }
              )
 
              stage 'Push to Nexus'
-             sh "${mvnHome}/bin/mvn deploy -DskipTests=true"
+             sh "${mvnCmd} deploy -DskipTests=true"
 
              stage 'Deploy DEV'
              sh "rm -rf oc-build && mkdir -p oc-build/deployments"
