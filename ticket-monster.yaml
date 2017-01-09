@@ -60,10 +60,10 @@ objects:
           node('maven') {
              // define commands
              def ocCmd = "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-             def mvnCmd = "mvn -s configuration/cicd-settings.xml"
+             // def mvnCmd = "mvn -s configuration/cicd-settings.xml"
 
              stage 'Build'
-             git branch: 'eap-7', url: 'http://gogs:3000/gogs/ticket-monster.git'
+             git branch: 'master', url: 'http://gogs:3000/gogs/ticket-monster.git'
              def v = version()
              sh "${mvnCmd} clean install -DskipTests=true"
 
